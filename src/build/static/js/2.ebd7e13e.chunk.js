@@ -1,0 +1,2 @@
+webpackJsonp([2],{1667:function(e,a,t){"use strict";function n(){return l.a.createElement("article",null,l.a.createElement("h1",null,l.a.createElement(u.a,c.a.header)))}Object.defineProperty(a,"__esModule",{value:!0}),a.default=n;var r=t(0),l=t.n(r),u=t(114),c=t(1947)},1947:function(e,a,t){"use strict";var n=t(114);a.a=Object(n.d)({header:{id:"boilerplate.containers.NotFoundPage.header",defaultMessage:"Page not found."}})}});
+//# sourceMappingURL=2.ebd7e13e.chunk.js.map

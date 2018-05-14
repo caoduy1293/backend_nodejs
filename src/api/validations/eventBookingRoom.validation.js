@@ -1,6 +1,13 @@
 const Joi = require('joi');
 
 module.exports = {
+  // GET /v1/events/eventsBooked
+  getEventsBooked: {
+    query: {
+      idRoom: Joi.string().required(),
+      selectedDate: Joi.date().required(),
+    },
+  },
   // GET /v1/events
   getEvents: {
     query: {

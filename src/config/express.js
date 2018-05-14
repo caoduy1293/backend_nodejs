@@ -9,13 +9,14 @@ const passport = require('passport');
 const routes = require('../api/routes/v1');
 const { logs } = require('./vars');
 const strategies = require('./passport');
-const error = require('../api/middlewares/error');
+const path = require('path');
 
 /**
 * Express instance
 * @public
 */
 const app = express();
+app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
 // request logging. dev: console | production: file
 app.use(morgan(logs));
@@ -46,13 +47,9 @@ passport.use('google', strategies.google);
 // mount api v1 routes
 app.use('/v1', routes);
 
-// if error is not an instanceOf APIError, convert it.
-app.use(error.converter);
-
-// catch 404 and forward to error handler
-app.use(error.notFound);
-
-// error handler, send stacktrace only during development
-app.use(error.handler);
+// Always return the main index.html, so react-router render the route in the client
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
+});
 
 module.exports = app;

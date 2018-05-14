@@ -1,4 +1,4 @@
-const { authorize, ADMIN, LOGGED_USER } = require('../../middlewares/auth');
+const { authorize, ADMIN, LOGGED_USER, ROLE_USER } = require('../../middlewares/auth');
 
 const express = require('express');
 const validate = require('express-validation');
@@ -10,7 +10,7 @@ const {
 const router = express.Router();
 
 router.route('/')
-  .get(authorize(LOGGED_USER), controller.list)
-  .post(authorize(LOGGED_USER), validate(createRoom), controller.create);
+  .get(authorize([ROLE_USER, ADMIN]), controller.list)
+  .post(authorize([ROLE_USER, ADMIN]), validate(createRoom), controller.create);
 
 module.exports = router;

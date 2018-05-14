@@ -1,3 +1,5 @@
+const error = require('../../middlewares/error');
+
 const express = require('express');
 const userRoutes = require('./user.route');
 const authRoutes = require('./auth.route');
@@ -20,5 +22,14 @@ router.use('/users', userRoutes);
 router.use('/auth', authRoutes);
 router.use('/rooms', roomRoutes);
 router.use('/events', eventBookingRoomRoutes);
+
+// if error is not an instanceOf APIError, convert it.
+router.use(error.converter);
+
+// catch 404 and forward to error handler
+router.use(error.notFound);
+
+// error handler, send stacktrace only during development
+router.use(error.handler);
 
 module.exports = router;

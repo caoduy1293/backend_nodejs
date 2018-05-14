@@ -7,12 +7,12 @@ const jwt = require('jwt-simple');
 const uuidv4 = require('uuid/v4');
 const APIError = require('../utils/APIError');
 const { env, jwtSecret, jwtExpirationInterval } = require('../../config/vars');
-const { ADMIN } = require('../middlewares/auth');
+const { ADMIN, ROLE_USER } = require('../middlewares/auth');
 
 /**
 * User Roles
 */
-const roles = ['user', 'admin'];
+const roles = [ROLE_USER, ADMIN];
 
 /**
  * User Schema
@@ -46,7 +46,7 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
     enum: roles,
-    default: 'user',
+    default: ROLE_USER,
   },
   picture: {
     type: String,
@@ -64,12 +64,12 @@ const userSchema = new mongoose.Schema({
  */
 userSchema.pre('save', async function save(next) {
   try {
-    if (this.role === ADMIN) {
-      throw new APIError({
-        message: 'not allowed create admin !',
-        status: httpStatus.NOT_ACCEPTABLE,
-      });
-    }
+    // if (this.role === ADMIN) {
+    //   throw new APIError({
+    //     message: 'not allowed create admin !',
+    //     status: httpStatus.NOT_ACCEPTABLE,
+    //   });
+    // }
     if (!this.isModified('password')) return next();
 
     const rounds = env === 'test' ? 1 : 10;
